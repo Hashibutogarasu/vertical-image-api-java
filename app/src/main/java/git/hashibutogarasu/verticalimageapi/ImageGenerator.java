@@ -13,19 +13,19 @@ import java.io.IOException;
 import java.util.Base64;
 
 public class ImageGenerator extends ResponseData {
-    ImageGenerator(String json, String width) throws IOException {
+    ImageGenerator(String json) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
-        TypeReference<FileInfo[]> type = new TypeReference<>() {};
-        FileInfo[] list = mapper.readValue(json, type);
+        TypeReference<RequestDataParser> type = new TypeReference<>() {};
+        RequestDataParser list = mapper.readValue(json, type);
 
-        this.width = Integer.parseInt(width);
+        this.width = list.width;
 
-        BufferedImage img = new BufferedImage(this.width, this.width*list.length, BufferedImage.TYPE_INT_ARGB);
+        BufferedImage img = new BufferedImage(this.width, this.width*list.data.size(), BufferedImage.TYPE_INT_ARGB);
         Graphics g = img.getGraphics();
 
         int num = 0;
 
-        for (FileInfo fileInfo: list) {
+        for (FileInfo fileInfo: list.data) {
             byte[] bytes = Base64.getDecoder().decode(fileInfo.fileData);
             BufferedImage bufferedImage = ImageIO.read(new ByteArrayInputStream(bytes));
             g.drawImage(bufferedImage, 0, img.getWidth()*num, null);

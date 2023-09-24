@@ -37,8 +37,6 @@ public class VerticalAPIServer implements HttpHandler {
             req = new String(b, StandardCharsets.UTF_8);
         }
 
-        String resBody = new ImageGenerator(req, t.getRequestHeaders().getFirst("Width")).toString();
-
         Headers resHeaders = t.getResponseHeaders();
         resHeaders.set("Content-Type", "application/json");
         resHeaders.set("Last-Modified",
@@ -48,7 +46,12 @@ public class VerticalAPIServer implements HttpHandler {
                         System.getProperty("java.vm.name") + " " +
                         System.getProperty("java.vm.vendor") + " " +
                         System.getProperty("java.vm.version") + ")");
-
+        String resBody = "{}";
+        try{
+            resBody = new ImageGenerator(req).toString();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         int statusCode = 200;
         long contentLength = resBody.getBytes(StandardCharsets.UTF_8).length;
         t.sendResponseHeaders(statusCode, contentLength);

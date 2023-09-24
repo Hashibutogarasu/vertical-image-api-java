@@ -1,6 +1,8 @@
 package git.hashibutogarasu.verticalimageapi;
 
+import java.util.ArrayList;
+
 public class RequestDataParser {
-    public FileInfo[] data;
+    public ArrayList<FileInfo> data;
     public int width;
 }
