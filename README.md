@@ -1,11 +1,11 @@
 # vertical image api java
 
-how to build
+### How to build
 ```
 gradle run build
 ```
 
-how to run
+### How to run
 ```
 java -jar app-[version].jar -p 8080
 ```
